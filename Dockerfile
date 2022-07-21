@@ -36,7 +36,9 @@ RUN apt -y install \
   python3-pip \
   sudo \
   mkvtoolnix \
-  mkvtoolnix-gui
+  mkvtoolnix-gui \
+  gvfs \
+  rename
 
 # Youtube-DLP
 
