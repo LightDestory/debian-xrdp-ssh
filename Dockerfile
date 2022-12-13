@@ -10,9 +10,9 @@ ENV BUILD_DEPS="git patch make libgtk2.0-0 build-essential pkg-config libc6-dev 
 
 RUN apt -y update && apt -y full-upgrade && apt -yy install apt-utils software-properties-common $BUILD_DEPS
 
-RUN apt -y install --no-install-recommends xfce4
+RUN apt -y update && apt -y install --no-install-recommends xfce4
 
-RUN apt -y install \
+RUN apt -y update && apt -y install \
   nano \
   openssh-server \
   xrdp \
