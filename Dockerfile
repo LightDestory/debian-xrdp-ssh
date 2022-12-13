@@ -1,6 +1,8 @@
 FROM debian:testing
 
-ENV LANG C.UTF-8
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i it_IT -c -f UTF-8 -A /usr/share/locale/locale.alias it_IT.UTF-8
+ENV LANG it_IT.utf8
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -19,7 +21,7 @@ RUN apt -y install \
   aria2 \
   wget \
   curl \ 
-  vlc \
+  mpv \
   trash-cli \
   mediainfo \
   mediainfo-gui \
@@ -37,7 +39,6 @@ RUN apt -y install \
   sudo \
   mkvtoolnix \
   mkvtoolnix-gui \
-  gvfs \
   rename
 
 # Youtube-DLP
@@ -73,23 +74,19 @@ RUN wget https://www.tweaking4all.com/downloads/betas/RenameMyTVSeries-2.1.7-GTK
 # MakeMKV
 
 WORKDIR /tmp
-RUN wget https://www.makemkv.com/download/makemkv-bin-1.17.0.tar.gz && \
-  wget https://www.makemkv.com/download/makemkv-oss-1.17.0.tar.gz && \
-  tar -xvf makemkv-bin-1.17.0.tar.gz && \
-  tar -xvf makemkv-oss-1.17.0.tar.gz && \
-  cd ./makemkv-oss-1.17.0 && \
+RUN wget https://www.makemkv.com/download/makemkv-bin-1.17.2.tar.gz && \
+  wget https://www.makemkv.com/download/makemkv-oss-1.17.2.tar.gz && \
+  tar -xvf makemkv-bin-1.17.2.tar.gz && \
+  tar -xvf makemkv-oss-1.17.2.tar.gz && \
+  cd ./makemkv-oss-1.17.2 && \
   ./configure && \
   make && \
   make install && \
-  cd ../makemkv-bin-1.17.0 && \
+  cd ../makemkv-bin-1.17.2 && \
   mkdir -p "tmp" && \
   echo "accepted" >> "tmp/eula_accepted" && \
   make && \
   make install
-
-# Fix for VLC as root
-
-RUN sed -i 's/geteuid/getppid/' /usr/bin/vlc 
 
 # Post-install configuration
 
