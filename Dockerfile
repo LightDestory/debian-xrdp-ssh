@@ -1,4 +1,4 @@
-FROM debian:testing
+FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
 	&& localedef -i it_IT -c -f UTF-8 -A /usr/share/locale/locale.alias it_IT.UTF-8
@@ -26,11 +26,9 @@ RUN apt -y update && apt -y install \
   mediainfo \
   mediainfo-gui \
   amule \
-  fish \ 
   firefox-esr \
   filezilla \
   xfce4-terminal \
-  unrar-free \
   xarchiver \
   mousepad \
   htop \
@@ -45,14 +43,6 @@ RUN apt -y update && apt -y install \
 
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
   chmod a+rx /usr/local/bin/yt-dlp
-
-# ADMVCP
-
-WORKDIR /tmp
-
-RUN FORCE_UNSAFE_CONFIGURE=1 && export FORCE_UNSAFE_CONFIGURE && curl https://raw.githubusercontent.com/jarun/advcpmv/master/install.sh --create-dirs -o ./advcpmv/install.sh && (cd advcpmv && sh install.sh)
-
-RUN mv ./advcpmv/advcp /usr/local/bin/cpg && mv ./advcpmv/advmv /usr/local/bin/mvg
 
 # MNAMER & PySubs2
 
